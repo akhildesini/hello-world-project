@@ -13,6 +13,6 @@ app.get('/', function (req, res) {
 /* istanbul ignore next */
 if (!module.parent) {
   app.listen(PORT, function () {
-    console.log(Express started on port ${PORT});
+    console.log(`Express started on port ${PORT}`);
   });
 }

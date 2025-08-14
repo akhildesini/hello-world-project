@@ -1,4 +1,4 @@
-# hello-world-project
+hello-world-project
 
 CI/CD Pipeline for a Node.js Web Application
 

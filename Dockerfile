@@ -1,18 +1,25 @@
-# Step 1: Use official Node.js image
-FROM node:18
 
-# Step 2: Set working directory
-WORKDIR /app
+# Stage 1: Use a secure and lightweight official Node.js image
+FROM node:20-alpine
 
-# Step 3: Copy package.json and install dependencies
-COPY package.json .
-RUN npm install
+# Set the working directory inside the container
+WORKDIR /usr/src/app
 
-# Step 4: Copy all files
+# Copy both package.json AND package-lock.json
+COPY package*.json ./
+
+# Install dependencies using npm ci for faster, more reliable builds
+# This will now work because package-lock.json exists
+RUN npm ci --omit=dev
+
+# Copy the rest of the application source code into the image
 COPY . .
 
-# Step 5: Expose port
-EXPOSE 3000
+# Expose port 8080 to allow external connections
+EXPOSE 8080
 
-# Step 6: Start the app
-CMD ["npm", "start"]
+# Run the application as a non-root user for enhanced security
+USER node
+
+# The command to run when the container starts.
+CMD [ "npm", "start" ]
